@@ -1,6 +1,7 @@
 #pragma once
 
 #include <db/types.hpp>
+#include <deque>
 #include <list>
 #include <unordered_map>
 #include <unordered_set>
@@ -17,6 +18,11 @@ constexpr size_t DEFAULT_NUM_PAGES = 50;
  */
 class BufferPool {
   // TODO pa1: add private members
+
+private:
+  std::vector<Page> pages;
+  std::vector<PageId> page_ids;
+  std::vector<bool> is_dirty;
 
 public:
   /**

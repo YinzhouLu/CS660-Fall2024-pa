@@ -14,7 +14,7 @@
 namespace db {
 class Database {
   // TODO pa1: add private members
-  
+  std::unordered_map<std::string, std::unique_ptr<DbFile>> files;
   BufferPool bufferPool;
 
   Database() = default;
