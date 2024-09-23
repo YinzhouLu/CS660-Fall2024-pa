@@ -10,4 +10,4 @@ Wasted Resources: Retaining pages of a non-existent file consumes buffer pool sp
 Possible Bug – Flush Inconsistency:
 
 Flush Operations: If the buffer pool retains dirty pages of a removed file and later attempts to flush them, it might result in writing data to a file that no longer exists or has been re-created differently. This can cause crashes or corruption of the new file.
-Key Collision: Since the buffer pool uses the file name as a key for retrieving pages, re-adding a file with the same name but different content could lead to conflicts between old dirty pages and new pages.
+Key Collision: Since the buffer pool uses the file name as a key for retrieving pages, re-adding a file with the same name but different content could lead to conflicts between old dirty pages and new pages
