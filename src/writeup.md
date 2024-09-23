@@ -8,7 +8,7 @@ discardPage(const PageId &pid): Removes a page from the buffer pool.
 flushPage(const PageId &pid): Writes a dirty page back to disk and marks it as clean.
 flushFile(const std::string &file): Flushes all dirty pages of a specific file to disk.
 
-Key Design Decisions
+Key Design Decisions：
 
 1. Page Storage and Management
    Vectors for Storage: Pages, their corresponding IDs, and dirty flags are stored in parallel std::vectors (pages, page_ids, is_dirty). This approach simplifies the association between pages and their metadata.
