@@ -34,7 +34,7 @@ Performance Optimization: Alternative data structures (e.g., std::unordered_map 
 
 Time Spent and Challenges Faced
 
-Time Investment：around 35hr
+Time Investment：around 36hr
 
 Learning C++: The first 10 hours were dedicated to learning C++, as this was the first time working with the language.
 Familiarized with syntax, pointers, references, and class structures.
