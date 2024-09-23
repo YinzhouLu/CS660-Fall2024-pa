@@ -1,0 +1,21 @@
+# ninja log v6
+1	28	7487438467570537	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	a88597c44d042d84
+1	28	7487438467570537	C:/Users/yinzhou/CLionProjects/CS660-Fall2024-yinzhou/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	a88597c44d042d84
+28	2250	7487438489797662	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	cfb4c3e1fc8c90df
+28	2250	7487438489797662	C:/Users/yinzhou/CLionProjects/CS660-Fall2024-yinzhou/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	cfb4c3e1fc8c90df
+2250	2317	7487438489817659	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	897dbdf3b328e8f8
+2250	2317	7487438489817659	C:/Users/yinzhou/CLionProjects/CS660-Fall2024-yinzhou/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	897dbdf3b328e8f8
+2317	2342	7487438490707660	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	3b3d1e7f51d8127a
+2317	2342	7487438490707660	C:/Users/yinzhou/CLionProjects/CS660-Fall2024-yinzhou/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	3b3d1e7f51d8127a
+2342	2365	7487438490947660	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	2e169f3d53143454
+2342	2365	7487438490947660	C:/Users/yinzhou/CLionProjects/CS660-Fall2024-yinzhou/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	2e169f3d53143454
+2366	2389	7487438491187666	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	2e1eb5cee435f39f
+2366	2389	7487438491187666	C:/Users/yinzhou/CLionProjects/CS660-Fall2024-yinzhou/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	2e1eb5cee435f39f
+2389	2413	7487438491427664	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	86f0fe2af840f49f
+2389	2413	7487438491427664	C:/Users/yinzhou/CLionProjects/CS660-Fall2024-yinzhou/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	86f0fe2af840f49f
+2413	2437	7487438491667660	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	72ac35a894f5375e
+2413	2437	7487438491667660	C:/Users/yinzhou/CLionProjects/CS660-Fall2024-yinzhou/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	72ac35a894f5375e
+2437	2470	7487438491993447	CMakeFiles/googletest-populate-complete	7e67e8ef3b4eeca9
+2437	2470	7487438491993447	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	7e67e8ef3b4eeca9
+2437	2470	7487438491993447	C:/Users/yinzhou/CLionProjects/CS660-Fall2024-yinzhou/cmake-build-debug/_deps/googletest-subbuild/CMakeFiles/googletest-populate-complete	7e67e8ef3b4eeca9
+2437	2470	7487438491993447	C:/Users/yinzhou/CLionProjects/CS660-Fall2024-yinzhou/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	7e67e8ef3b4eeca9

@@ -1,0 +1,5 @@
+if(EXISTS "C:/Users/yinzhou/CLionProjects/CS660-Fall2024-yinzhou/cmake-build-debug/tests/pa1/pa1[1]_tests.cmake")
+  include("C:/Users/yinzhou/CLionProjects/CS660-Fall2024-yinzhou/cmake-build-debug/tests/pa1/pa1[1]_tests.cmake")
+else()
+  add_test(pa1_NOT_BUILT pa1_NOT_BUILT)
+endif()

@@ -1,6 +1,7 @@
 #include <db/BufferPool.hpp>
 #include <db/Database.hpp>
 #include <numeric>
+#include <algorithm>
 
 using namespace db;
 
@@ -12,14 +13,9 @@ BufferPool::BufferPool()
 
 BufferPool::~BufferPool() {
   // TODO pa1: flush any remaining dirty pages
-  for(int i=0; i<page_ids.size(); i++) {
-    flushPage(page_ids[i]);
+  for (const auto &pid : page_ids) {
+    flushPage(pid);
   }
-
-  //clear the pages, page ids and the is_dirty vectors
-  pages.clear();
-  page_ids.clear();
-  is_dirty.clear();
 
 }
 
@@ -27,8 +23,6 @@ Page &BufferPool::getPage(const PageId &pid) {
   // TODO pa1: If already in buffer pool, make it the most recent page and return it
 
   for(int i=0; i<pages.size(); i++) {
-
-    //finds the page correspondinf to the given page id
     if(page_ids[i] == pid) {
 
       Page p = std::move(pages[i]);
@@ -51,24 +45,19 @@ Page &BufferPool::getPage(const PageId &pid) {
   // TODO pa1: If there are no available pages, evict the least recently used page. If it is dirty, flush it to disk
 
   if(pages.size() == DEFAULT_NUM_PAGES) {
-
-    //flushes the page if it is dirty
     if(is_dirty[pages.size()-1]) {
       flushPage(page_ids[pages.size()-1]);
     }
-
     pages.pop_back();
     page_ids.pop_back();
     is_dirty.pop_back();
   }
 
   // TODO pa1: Read the page from disk to one of the available slots, make it the most recent page
-
   const Database &db = getDatabase();
   const DbFile &file = db.get(pid.file);
   Page page;
   file.readPage(page, pid.page);
-
   pages.insert(pages.begin(), page);
   page_ids.insert(page_ids.begin(), pid);
   is_dirty.insert(is_dirty.begin(), 0);
@@ -79,111 +68,75 @@ Page &BufferPool::getPage(const PageId &pid) {
 
 void BufferPool::markDirty(const PageId &pid) {
   // TODO pa1: Mark the page as dirty. Note that the page must already be in the buffer pool
-  bool flag=true;
-
-  for(int i=0; i<pages.size(); i++) {
-
-    //marks the page with page id as dirty
-    if(page_ids[i] == pid) {
+  for (int i = 0; i < page_ids.size(); i++) {
+    if (page_ids[i] == pid) {
       is_dirty[i] = true;
-      flag = false;
-      break;
+      return;  // Exit the function once the page is marked dirty
     }
   }
-
-  if(flag) {
-    throw std::logic_error("page doesn't exist in bufferpool");
-  }
-
+  // If the page is not found, throw an exception
+  throw std::logic_error("Page not in buffer pool");
 }
 
 bool BufferPool::isDirty(const PageId &pid) const {
   // TODO pa1: Return whether the page is dirty. Note that the page must already be in the buffer pool
-
-  //checks if given page is dirty
-  for(int i=0; i<pages.size(); i++) {
-
-    if(page_ids[i] == pid) {
+  for (size_t i = 0; i < page_ids.size(); ++i) {
+    if (page_ids[i] == pid) {
       return is_dirty[i];
     }
   }
-
-  throw std::logic_error("page doesn't exist in bufferpool");
-
+  throw std::logic_error("Page not in buffer pool");
 }
+
 
 bool BufferPool::contains(const PageId &pid) const {
   // TODO pa1: Return whether the page is in the buffer pool
-
-  //checks if the bufferpool contains the page
-  for(int i=0; i<pages.size(); i++) {
-    if(page_ids[i] == pid) {
-      return true;
-    }
-  }
-  return false;
+  return std::find(page_ids.begin(), page_ids.end(), pid) != page_ids.end();
 }
+
 
 void BufferPool::discardPage(const PageId &pid) {
   // TODO pa1: Discard the page from the buffer pool. Note that the page must already be in the buffer pool
-
-  bool flag=true;
-
-  for(int i=0; i<pages.size(); i++) {
-
-    //discards the page with the given page id
-    if(page_ids[i] == pid) {
-
-      pages.erase(pages.begin()+i);
-      page_ids.erase(page_ids.begin()+i);
-      is_dirty.erase(is_dirty.begin()+i);
-      flag=false;
-
-      break;
+  // Discard the page from the buffer pool. The page must already be in the buffer pool.
+  for (int i = 0; i < pages.size(); i++) {
+    if (page_ids[i] == pid) {
+      // Remove the page and associated data
+      pages.erase(pages.begin() + i);
+      page_ids.erase(page_ids.begin() + i);
+      is_dirty.erase(is_dirty.begin() + i);
+      return;  // Exit the function after discarding the page
     }
   }
-
-  if(flag) {
-    throw std::logic_error("page doesn't exist in bufferpool");
-  }
+  // If the page was not found, throw an exception
+  throw std::logic_error("Page not in buffer pool");
 }
 
 void BufferPool::flushPage(const PageId &pid) {
   // TODO pa1: Flush the page to disk. Note that the page must already be in the buffer pool
-
-  bool flag=true;
-
-  for(int i=0; i<pages.size(); i++) {
-
-    if(page_ids[i] == pid) {
-
-      if(is_dirty[i]) {
+  for (int i = 0; i < pages.size(); i++) {
+    if (page_ids[i] == pid) {
+      if (is_dirty[i]) {
         const Database &db = getDatabase();
         const DbFile &file = db.get(pid.file);
 
-        Page page = std::move(pages[i]);
-        file.writePage(page, pid.page);
+        // Write the dirty page to disk
+        file.writePage(pages[i], pid.page);
 
-        pages[i] = std::move(page);
+        // Mark the page as clean
         is_dirty[i] = false;
       }
-
-      flag = false;
+      return;  // Exit the function after flushing the page
     }
   }
-
-  if(flag) {
-    throw std::logic_error("page doesn't exist in bufferpool");
-  }
+  // If the page was not found in the buffer pool, throw an exception
+  throw std::logic_error("Page doesn't exist in buffer pool");
 }
 
 void BufferPool::flushFile(const std::string &file) {
   // TODO pa1: Flush all pages of the file to disk
-  for (int i=0; i<pages.size(); i++) {
-
-    if(page_ids[i].file == file) {
-      flushPage(page_ids[i]);
+  for (const auto &pid : page_ids) {
+    if (pid.file == file) {
+      flushPage(pid);
     }
   }
-
 }
